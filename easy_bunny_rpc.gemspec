@@ -3,14 +3,14 @@
 require File.expand_path('../lib/easy_bunny_rpc/version', __FILE__)
 
 Gem::Specification.new do |gem|
-  gem.name          = "easy_bunny_rpc"
+  gem.name          = 'easy_bunny_rpc'
   gem.version       = EasyBunnyRPC::VERSION
   gem.summary       = %q{A simple rabbitmq rpc server/client library built on bunny with message serialization using json}
   gem.description   = gem.summary
   gem.license       = 'MIT'
   gem.authors       = ['Tom van Leeuwen']
   gem.email         = 'tom@vleeuwen.eu'
-  gem.homepage      = "https://rubygems.org/gems/easy_bunny_rpc"
+  gem.homepage      = 'https://rubygems.org/gems/easy_bunny_rpc'
 
   gem.files         = `git ls-files`.split($/)
   gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
