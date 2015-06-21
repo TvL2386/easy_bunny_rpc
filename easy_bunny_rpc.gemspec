@@ -10,7 +10,7 @@ Gem::Specification.new do |gem|
   gem.license       = 'MIT'
   gem.authors       = ['Tom van Leeuwen']
   gem.email         = 'tom@vleeuwen.eu'
-  gem.homepage      = 'https://rubygems.org/gems/easy_bunny_rpc'
+  gem.homepage      = 'https://github.com/TvL2386/easy_bunny_rpc'
 
   gem.files         = `git ls-files`.split($/)
   gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
