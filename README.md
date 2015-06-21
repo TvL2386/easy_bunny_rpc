@@ -4,8 +4,9 @@ easy\_bunny\_rpc
 
 Generic RPC client/worker library handling data serialization built on top of bunny.
 
+
 Example usage
------
+-------------
 
 Create an EchoWorker class which simply echoes whatever is received:
 
@@ -46,9 +47,12 @@ class EchoClient < EasyBunnyRPC::Client
   def perform
     set_timeout(2) # timeout in seconds, default is 5
     
-    # The first argument is the payload, the send argument is the correlation_id
-    # The correlation_id is always send back as-is by the worker
-    # This way you can correlate the replies with your requests
+    # The first argument is the payload. The payload can be anything, just keep in
+    # mind it must be serializable to a String because .to_json is called on it
+        
+    # The second argument is the correlation_id.
+    # The correlation_id is always send back as-is by the worker.
+    # This way you can correlate the replies with your requests.
     publish('hi there', 'call 1')
     publish('hi there again', 'call 2')
 
@@ -83,7 +87,7 @@ Output:
 
 
 Notes
-_____
+-----
 
 - Tested with RabbitMQ
 - Uses the expiration feature of RabbitMQ to expire messages sent by the client
