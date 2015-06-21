@@ -77,8 +77,8 @@ echo_client.perform
 
 Output:
 ``` text
-{"success"=>true, "payload"=>"Succesfully reloaded", "correlation_id"=>"call 1"}
-{"success"=>true, "payload"=>"Succesfully reloaded", "correlation_id"=>"call 2"}
+{"success"=>true, "payload"=>"hi there", "correlation_id"=>"call 1"}
+{"success"=>true, "payload"=>"hi there again", "correlation_id"=>"call 2"}
 ```
 
 
