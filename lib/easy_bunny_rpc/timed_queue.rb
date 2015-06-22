@@ -26,6 +26,7 @@ module EasyBunnyRPC
 
             raise(Timeout::Error, "Waited #{timeout} seconds to pop") if(remaining <= 0)
 
+            # unlocks mutex, waits for remaining seconds, locks mutex on wake-up
             @cv.wait(@mutex, remaining)
           else
             return @array.pop
