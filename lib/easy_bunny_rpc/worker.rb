@@ -7,7 +7,13 @@ module EasyBunnyRPC
       @options = options
     end
 
-    private
+    def publish_success(payload)
+      publish true, payload
+    end
+
+    def publish_failure(payload)
+      publish false, payload
+    end
 
     def subscribe
       queue.subscribe(block: true) do |delivery_info, properties, payload|
@@ -17,18 +23,25 @@ module EasyBunnyRPC
       end
     end
 
+    def close
+      if defined?(@channel)
+        channel.close
+        remove_instance_variable :@channel
+        remove_instance_variable :@queue
+      end
+
+      if defined?(@connection)
+        connection.close
+        remove_instance_variable :@connection
+      end
+    end
+
+    private
+
     def publish(success, payload)
       obj = { 'success' => success, 'payload' => payload }.to_json
 
       exchange.publish(obj, routing_key: @properties.reply_to, correlation_id: @properties.correlation_id)
-    end
-
-    def publish_success(payload)
-      publish true, payload
-    end
-
-    def publish_failure(payload)
-      publish false, payload
     end
 
     def connection

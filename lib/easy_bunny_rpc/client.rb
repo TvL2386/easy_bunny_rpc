@@ -15,8 +15,6 @@ module EasyBunnyRPC
       set_timeout(5)
     end
 
-    private
-
     def pop
       correlation_id, payload = @timed_queue.pop_with_timeout(@timeout)
 
@@ -27,17 +25,32 @@ module EasyBunnyRPC
       @timeout = value
     end
 
+    def publish(payload, correlation_id=default_correlation_id)
+      start_subscription unless @subscribed
+      exchange.publish([payload].to_json, routing_key: @options[:queue], correlation_id: correlation_id, reply_to: queue.name, expiration: (@timeout*1000).to_i)
+    end
+
+    def close
+      if defined?(@channel)
+        channel.close
+        remove_instance_variable :@channel
+        remove_instance_variable :@queue
+      end
+
+      if defined?(@connection)
+        connection.close
+        remove_instance_variable :@connection
+      end
+    end
+
+    private
+
     def start_subscription
       queue.subscribe(block: false) do |delivery_info, properties, payload|
         @timed_queue.push([properties.correlation_id, payload])
       end
 
       @subscribed = true
-    end
-
-    def publish(payload, correlation_id=default_correlation_id)
-      start_subscription unless @subscribed
-      exchange.publish([payload].to_json, routing_key: @options[:queue], correlation_id: correlation_id, reply_to: queue.name, expiration: (@timeout*1000).to_i)
     end
 
     def connection
