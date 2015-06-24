@@ -34,6 +34,10 @@ module EasyBunnyRPC
         connection.close
         remove_instance_variable :@connection
       end
+
+      if defined?(@exchange)
+        remove_instance_variable :@exchange
+      end
     end
 
     private
