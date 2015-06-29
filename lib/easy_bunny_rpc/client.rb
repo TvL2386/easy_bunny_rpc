@@ -77,7 +77,7 @@ module EasyBunnyRPC
     end
 
     def generate_queue_name
-      [@options[:queue], '-client_', SecureRandom.hex].join
+      ['reply-', @options[:bunny][:user], '_', SecureRandom.hex].join
     end
 
     def exchange
